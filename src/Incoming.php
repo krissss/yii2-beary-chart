@@ -1,11 +1,20 @@
 <?php
+/**
+ * Yii2 BearyChat
+ * User: kriss
+ * Date: 2016-07-13
+ * Time: 14:15
+ * @link https://bearychat.com/integrations/incoming
+ * @link https://github.com/ElfSundae/BearyChat
+ */
 
 namespace kriss\bearyChat;
 
+use ElfSundae\BearyChat\Client;
 use yii\base\Component;
 use yii\base\UnknownPropertyException;
 
-class Client extends Component
+class Incoming extends Component
 {
     /*
     |--------------------------------------------------------------------------
@@ -50,9 +59,9 @@ class Client extends Component
 
     /**
      * Get a client instance.
-     *
-     * @param string $name
+     * @param null $name
      * @return \ElfSundae\BearyChat\Client
+     * @throws UnknownPropertyException
      */
     public function client($name = null)
     {
@@ -60,7 +69,7 @@ class Client extends Component
             $name = $this->default;
         }
 
-        if(!isset($this->clients[$name])){
+        if (!isset($this->clients[$name])) {
             throw new UnknownPropertyException('Not found "name", it\'s must be set in "clients"');
         }
         return $this->resolve($this->clients[$name]);
@@ -68,13 +77,13 @@ class Client extends Component
 
     /**
      * Resolve the given client.
-     *
      * @param array $config
      * @return \ElfSundae\BearyChat\Client
+     * @throws UnknownPropertyException
      */
     protected function resolve($config)
     {
-        if(!isset($config['webhook'])){
+        if (!isset($config['webhook'])) {
             throw new UnknownPropertyException('Not found "webhook", it\'s must be set in "clients[$name]"');
         }
         return new Client(
@@ -82,5 +91,4 @@ class Client extends Component
             isset($config['message_defaults']) ? $config['message_defaults'] : []
         );
     }
-
 }
