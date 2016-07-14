@@ -58,6 +58,12 @@ class Incoming extends Component
     ];
 
     /**
+     * 客户端实例
+     * @var array
+     */
+    private $clientInstances = [];
+
+    /**
      * Get a client instance.
      * @param null $name
      * @return \ElfSundae\BearyChat\Client
@@ -69,10 +75,16 @@ class Incoming extends Component
             $name = $this->default;
         }
 
+        if (isset($this->clientInstances[$name])) {
+            return $this->clientInstances[$name];
+        }
+
         if (!isset($this->clients[$name])) {
             throw new UnknownPropertyException('Not found "name", it\'s must be set in "clients"');
         }
-        return $this->resolve($this->clients[$name]);
+
+        $this->clientInstances[$name] = $this->resolve($this->clients[$name]);
+        return $this->clientInstances[$name];
     }
 
     /**
