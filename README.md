@@ -37,7 +37,7 @@ basic 模版为 config/web.php, advanced 模版为对应入口的 config/main.ph
 'components' => [
     .....
     'bearyChat' => [
-        'class' => 'kriss\BearyChat\Incoming',
+        'class' => 'kriss\bearyChat\Incoming',
         'clients' => [
             'default' => [
                 'webhook' => 'https://hook.bearychat.com/=XXXX/incoming/XXXXXXXXXXXXXX',
